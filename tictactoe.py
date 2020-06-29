@@ -1,6 +1,8 @@
 import random
 import time
 
+#--BOARD PARENT CLASS
+
 class Board:
     def __init__(self,board):
         self.board = board
@@ -40,6 +42,9 @@ class Board:
                 return False
         return True
 
+    
+#--PLAYER SUBCLASS    
+    
 class Player(Board):
     def __init__(self, board, playerOneName, playerTwoName):
         super().__init__(board)
@@ -77,11 +82,15 @@ class Player(Board):
         # Return true if the passed move is free on the passed board.
         return board[move] == ' '
 
+    
+#--GET PLAYER MOVES
+
     def getPlayerMove(board):
         # Let player one type in his move.
         move = ' '
         while move not in '1 2 3 4 5 6 7 8 9'.split() or not Player.isSpaceFree(board, int(move)):
-            move = input('What is your next move? (1-9)')
+            print('What is your next move? (1-9)')
+            move = input()
         return int(move)
 
     def getSecondPlayerMove(board):
@@ -92,6 +101,9 @@ class Player(Board):
             print('What is your next move? (1-9)')
             move = input()
         return int(move)
+
+#--BEGINNING
+
 
 def main():
     print('Welcome to Tic Tac Toe!')
@@ -111,7 +123,7 @@ def main():
         gameIsPlaying = True
 
         while gameIsPlaying:
-            # Player one's turn
+#--PLAYER ONE'S TURN
             if turn == 'Player 1':
                 print('\nIt\'s ' + playerOneName + '\'s turn...')
                 move = Player.getPlayerMove(theBoard)
@@ -132,7 +144,7 @@ Player Two score:''' + str(playerTwoScore))
                     else:
                         turn = 'Player 2'
             else:
-                # Player two's turn
+#--PLAYER TWO'S TURN
                 print('\nIt\'s ' + playerTwoName + '\'s turn...')
                 move = Player.getSecondPlayerMove(theBoard)
                 Player.makeMove(theBoard, playerTwoLetter, move)
