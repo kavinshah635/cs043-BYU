@@ -1,10 +1,15 @@
+#--Tic-Tac-Toe 2 player game
+#--Classes are Board(parent) and Player
+#--Improvements are = Bigger board with numbering, Player names, Scoreboard, and repeats question if input is incorrect.
+
 import random
 import time
+import sys
 
 #--BOARD PARENT CLASS
 
 class Board:
-    def __init__(self,board):
+    def __init__(self, board):
         self.board = board
 
     def drawBoard(board):
@@ -42,14 +47,15 @@ class Board:
                 return False
         return True
 
-    
-#--PLAYER SUBCLASS    
-    
+
+#--PLAYER SUBCLASS
+
 class Player(Board):
     def __init__(self, board, playerOneName, playerTwoName):
         super().__init__(board)
         self.playerOneName = playerOneName
         self.playerTwoName = playerTwoName
+
 
     def whoGoesFirst():
         # Randomly chooses which player goes first (1 or 2).
@@ -57,6 +63,7 @@ class Player(Board):
             return 'Player 1'
         else:
             return 'Player 2'
+
 
     def isWinner(bo, le):
         # Given a board and a player's letter, this function returns True if that player has won.
@@ -70,10 +77,6 @@ class Player(Board):
                 (bo[7] == le and bo[5] == le and bo[3] == le) or  # diagonal
                 (bo[9] == le and bo[5] == le and bo[1] == le))  # diagonal
 
-    def playAgain():
-        # This function returns True if the player wants to play again, otherwise it returns False.
-        print('Do you both want to play again? (yes or no)')
-        return input().lower().startswith('y')
 
     def makeMove(board, letter, move):
         board[int(move)] = letter
@@ -82,8 +85,7 @@ class Player(Board):
         # Return true if the passed move is free on the passed board.
         return board[move] == ' '
 
-    
-#--GET PLAYER MOVES
+    #---GET BOTH PLAYER'S MOVES
 
     def getPlayerMove(board):
         # Let player one type in his move.
@@ -102,8 +104,20 @@ class Player(Board):
             move = input()
         return int(move)
 
-#--BEGINNING
 
+#---ACTUAL GAMEPLAY
+def playAgain():
+    # This function returns True if the player wants to play again, otherwise it returns False.
+    print('Do you both want to play again? (yes or no)')
+    again = input().lower()
+
+    while again != 'y' and again != 'n' and again != 'yes' and again != 'no' :
+        print('Do you both want to play again? (yes or no)')
+        again = input()
+    if again.startswith('n'):
+        sys.exit
+    if again.startswith('y'):
+        pass
 
 def main():
     print('Welcome to Tic Tac Toe!')
@@ -112,10 +126,10 @@ def main():
     playerOneScore = 0
     playerTwoScore = 0
     board = 0
-    a = Player(board,playerOneName,playerTwoName)
+    a = Player(board, playerOneName, playerTwoName)
 
     while True:
-    # Reset the board
+        # Reset the board
         theBoard = [' '] * 10
         playerOneLetter, playerTwoLetter = a.inputPlayerLetter()
         turn = Player.whoGoesFirst()
@@ -123,7 +137,8 @@ def main():
         gameIsPlaying = True
 
         while gameIsPlaying:
-#--PLAYER ONE'S TURN
+
+            #---PLAYER ONE'S TURN
             if turn == 'Player 1':
                 print('\nIt\'s ' + playerOneName + '\'s turn...')
                 move = Player.getPlayerMove(theBoard)
@@ -144,7 +159,8 @@ Player Two score:''' + str(playerTwoScore))
                     else:
                         turn = 'Player 2'
             else:
-#--PLAYER TWO'S TURN
+
+                #---PLAYER TWO'S TURN
                 print('\nIt\'s ' + playerTwoName + '\'s turn...')
                 move = Player.getSecondPlayerMove(theBoard)
                 Player.makeMove(theBoard, playerTwoLetter, move)
@@ -165,7 +181,6 @@ Player Two score:''' + str(playerTwoScore))
                     else:
                         turn = 'Player 1'
 
-        if not Player.playAgain():
-            break
+        playAgain()
 
-main ()
+main()
