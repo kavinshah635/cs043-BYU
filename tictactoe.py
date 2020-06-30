@@ -108,16 +108,13 @@ class Player(Board):
 #---ACTUAL GAMEPLAY
 def playAgain():
     # This function returns True if the player wants to play again, otherwise it returns False.
-    print('Do you both want to play again? (yes or no)')
-    again = input().lower()
-
-    while again != 'y' and again != 'n' and again != 'yes' and again != 'no' :
-        print('Do you both want to play again? (yes or no)')
-        again = input()
-    if again.startswith('n'):
-        sys.exit
-    if again.startswith('y'):
-        pass
+        again = input('Do you both want to play again? (yes or no)')
+        while again != 'y' and again != 'n' and again != 'yes' and again != 'no':
+            again = input('Do you both want to play again? (yes or no)')
+        if again.startswith('n'):
+            sys.exit()
+        if again.startswith('y'):
+            pass
 
 def main():
     print('Welcome to Tic Tac Toe!')
